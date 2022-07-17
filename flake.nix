@@ -23,7 +23,7 @@
     # Extra flakes for modules, packages, etc
     hardware.url = "github:nixos/nixos-hardware"; # Convenience modules for hardware-specific quirks
     # nur.url = "github:nix-community/NUR";              # User contributed pkgs and modules
-    nix-colors.url = "github:misterio77/nix-colors"; # Color schemes for usage with home-manager
+    # nix-colors.url = "github:misterio77/nix-colors"; # Color schemes for usage with home-manager
     # impermanence.url = "github:riscadoa/impermanence"; # Utilities for opt-in persistance
     # TODO: Add any other flakes you need
   };

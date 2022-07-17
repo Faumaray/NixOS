@@ -72,7 +72,9 @@
       # Be sure to change it (using passwd) after rebooting!
       # initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
+      shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCP2/sYODA0NnfSsxYO80zpT0GM6F5jErk12WAybjQxBw7cNZQmCYkY06oyzpy4n/DHI/j10IhuRJXsEWlZOHQ0cx51W+v6xcDSNlJVuAInUX7RGNg8FKiOoikFztuIyRMjQv/ElWaA2sNkyLNt/JnK+pfQvqvi9fqSPQ++wvoHJ2lO+qFLGB3fI/bItLbVK1QSKMp6D3lR7XQ/k7y6+ZbOW60lATp3/cGoVSOi2fnE2QEnmpRT3yNwJs72o16tEQkd0pJdgoyD3xok71RvVFX35m2b4g540w9iKmGtcDpx5PDj1XC/ms3sFerJ0LD99lUgch5ZuvFRw8ywwGTiDpPxeEph4e+0WUo410HfawSoM5n1tVMFdAEdW7KJmxGDyFx3++j+yT5/0gXcPSx4SEBXV8rihws2/uYzlTJhS1JCkrjk5xN94RjcISwpU6jxN+XcwnXJKWn6KpQKvAKJXL9BZbMGkQ+zurdJkpJNFfJtMPKsSkW1CzsQrO8C3LqOJs= faumaray@faumaray"
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)

@@ -1,0 +1,27 @@
+toolchain=/usr/x86_64-w64-mingw32 # Adjust this path
+target_host=x86_64-w64-mingw32
+cc_compiler=clang
+cxx_compiler=clang++
+
+[env]
+CONAN_CMAKE_FIND_ROOT_PATH=$toolchain  # Optional, for CMake to find things in that folder
+CONAN_CMAKE_SYSROOT=$toolchain  # Optional, if we want to define sysroot
+CHOST=$target_host
+AR=llvm-ar
+AS=llvm-as
+RANLIB=llvm-ranlib
+CC=$cc_compiler --target=$target_host
+CXX=$cxx_compiler --target=$target_host
+STRIP=llvm-strip
+RC=llvm-windres
+
+[settings]
+# We are cross-building to Windows
+os=Windows
+arch=x86_64
+compiler=clang
+
+# Adjust to the gcc version of your MinGW package
+compiler.version=13
+compiler.libcxx=libc++
+build_type=Release
