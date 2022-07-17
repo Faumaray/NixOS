@@ -12,10 +12,18 @@
     # Utilities for building our flake
     flake-utils.url = "github:numtide/flake-utils";
 
+    rust-overlay = {
+      url = github:oxalica/rust-overlay;
+    };
+    hyprland = {
+      url = github:hyprwm/Hyprland;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Extra flakes for modules, packages, etc
     hardware.url = "github:nixos/nixos-hardware"; # Convenience modules for hardware-specific quirks
     # nur.url = "github:nix-community/NUR";              # User contributed pkgs and modules
-    # nix-colors.url = "github:misterio77/nix-colors";   # Color schemes for usage with home-manager
+    nix-colors.url = "github:misterio77/nix-colors"; # Color schemes for usage with home-manager
     # impermanence.url = "github:riscadoa/impermanence"; # Utilities for opt-in persistance
     # TODO: Add any other flakes you need
   };
@@ -34,6 +42,7 @@
       # They will be added to your 'pkgs'
       overlays = {
         default = import ./overlay; # Our own overlay
+        rust = inputs.rust-overlay.overlays.default;
         # nur = nur.overlay
       };
 
@@ -41,7 +50,7 @@
       # Accessible via 'nixos-rebuild'
       nixosConfigurations = {
         # FIXME: Replace with your hostname
-        your-hostname = nixosSystem {
+        faumaray = nixosSystem {
           system = "x86_64-linux";
 
           modules = [
@@ -61,9 +70,9 @@
       # Accessible via 'home-manager'
       homeConfigurations = {
         # FIXME: Replace with your username@hostname
-        "your-name@your-hostname" = homeManagerConfiguration rec {
+        "faumaray@faumaray" = homeManagerConfiguration rec {
           # FIXME: Replace with your username
-          username = "your-name";
+          username = "faumaray";
           homeDirectory = "/home/${username}";
           system = "x86_64-linux";
 
@@ -72,6 +81,7 @@
           extraModules = [
             # Adds your custom home-manager modules
             ./modules/home-manager
+            inputs.hyprland.nixosModules.default
             # Adds overlays
             { nixpkgs.overlays = attrValues overlays; }
           ];

@@ -29,13 +29,17 @@
   '';
 
   nix = {
-    # Make sure we have at least nix 2.4
-    # TODO: You can remove me if you're using NixOS 22.05+
     package = pkgs.nixFlakes;
     # Enable flakes and new 'nix' command
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+
     autoOptimiseStore = true;
   };
 
@@ -45,15 +49,24 @@
   # FIXME: Add the rest of your current configuration
 
   # TODO: Set your hostname
-  networking.hostName = "your-hostname";
-
+  networking.hostName = "faumaray";
+  networking.networkmanager.enable = true;
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader.systemd-boot.enable = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+    };
+    grub = {
+      efiSupport = true;
+      device = "nodev";
+    };
+  };
+
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
     # FIXME: Replace with your username
-    your-name = {
+    faumaray = {
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
@@ -63,9 +76,65 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" ];
     };
   };
+
+
+
+  # Set your time zone.
+  time.timeZone = "Europe/Samara";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  fonts = {
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "Iosevka Nerd Font Mono" ];
+      };
+
+      enable = true;
+    };
+
+    fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "Iosevka" ]; })
+    ];
+  };
+
+  programs.xwayland.enable = true;
+  services.xserver = {
+    enable = true;
+    layout = "us";
+    libinput.enable = true;
+    # displayManager = {
+    #   sddm = {
+    #     enable = true;
+
+    #   };
+    # };
+
+    videoDrivers = [ "nvidia" ];
+    useGlamor = true;
+
+  };
+
+  # enable hardware features
+  hardware = {
+    nvidia = {
+      prime = {
+        nvidiaBusId = "PCI:1:0:0";
+        intelBusId = "PCI:0:2:0";
+        offload.enable = true;
+      };
+      nvidiaPersistenced = true;
+      modesetting.enable = true;
+    };
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
+
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
@@ -76,4 +145,24 @@
     # Use keys only. Remove if you want to SSH using password (not recommended)
     passwordAuthentication = false;
   };
+
+  services.pipewire = {
+    enable = true;
+    wireplumber.enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+
+  services.dbus.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ];
+    gtkUsePortal = true;
+  };
+
+  sound.enable = true;
+
+
 }
