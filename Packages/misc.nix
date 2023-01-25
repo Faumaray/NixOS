@@ -30,7 +30,7 @@
     LC_CTYPE = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
     EDITOR = "nvim";
-    QT_STYLE_OVERRIDE = "kvantum";
+    QT_STYLE_OVERRIDE = "qt5ct";
     QT_QPA_PLATFORMTHEME= "qt5ct";
     XDG_CACHE_HOME = "\${HOME}/.cache";
     XDG_CONFIG_HOME = "\${HOME}/.config";
@@ -68,7 +68,7 @@
 
     shellAliases = {
       rebase = "git fetch --all --prune --prune-tags && git rebase";
-      gamescope = "INTEL_DEBUG=norbc nixGL gamescope -w 1920 -h 1080 -W 1920 -H 1080 -R --prefer-vk-device=8086:5917 -- prime-run";
+      gamescope = "INTEL_DEBUG=norbc gamescope -w 1920 -h 1080 -W 1920 -H 1080 -R --prefer-vk-device=8086:5917 -- prime-run";
       nixos-switch =
         "sudo nixos-rebuild switch #.faumaray --flake ~/NixOsConfig";
       nixos_test = "sudo nixos-rebuild test #.faumaray --flake ~/NixOsConfig";

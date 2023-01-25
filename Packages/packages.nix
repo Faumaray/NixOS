@@ -7,19 +7,22 @@ let
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
-  '';
+  '';  
   in
 {
   home.packages = with pkgs; [
-    # gamescope
     qemu
     virt-manager
+    bottles
+    rofi
     qt5ct
     libsForQt5.qtstyleplugin-kvantum
     ntfs3g
     pcmanfm-qt
-    wineLoLWaylandLatest
-    # wineWowPackages.waylandFull
+    cachix
+    wine-lol-wayland
+    gamescope
+    winetricks
     direnv
     samba
     neovim
@@ -49,5 +52,7 @@ let
     webcord
     pob-community
     nixgl.auto.nixGLDefault
+    nixgl.auto.nixVulkanNvidia
+    nixgl.nixVulkanIntel
   ];
 }

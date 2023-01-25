@@ -6,8 +6,8 @@
 
   services.openssh = {
     enable = lib.mkForce true;
-    permitRootLogin = "no";
-    passwordAuthentication = lib.mkForce true;
+    settings.PermitRootLogin = "no";
+    settings.PasswordAuthentication = lib.mkForce true;
   };
 
   services = {
@@ -32,6 +32,7 @@
     displayManager.sddm = {
       enable = true;
     };
+    windowManager.hypr.enable = true;
     displayManager.defaultSession = "hyprland";
     videoDrivers = [ "nvidia" ];
   };

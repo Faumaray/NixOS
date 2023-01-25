@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Nix Packages
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # Nix Packages
 
     nixpkgs-wayland = { # Nix wayland specific Packages
       url = "github:nix-community/nixpkgs-wayland";
@@ -44,7 +44,6 @@
 
     oxilay = { # My Overlay
       url = "github:Faumaray/OxiLay";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
 
@@ -52,6 +51,19 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       overlays = [
+        (self: super:
+          {
+          gamescope = super.gamescope.overrideAttrs (oldAttrs: {
+        nativeBuildInputs = with super; [
+          meson
+          pkg-config
+          ninja
+          makeBinaryWrapper
+          cmake
+          wlroots_0_15
+        ];
+
+        });})
         inputs.nixpkgs-wayland.overlay
         inputs.nixgl.overlay
         inputs.hyprpaper.overlays.default

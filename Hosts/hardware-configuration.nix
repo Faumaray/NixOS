@@ -23,10 +23,10 @@
   # boot.kernelModules = [ "kvm-intel" "kvmgt" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio-mdev" "vfio" "vhost-net" ];
   # boot.kernelParams = [ "i915.enable_gvt=1""i915.enable_guc=0" "kvmgt" "intel_iommu=on" "iommu=pt" "intel_iommu=igfx_off" "kvm.ignore_rsms=1" "kmv.report_ignored_msrs=0" "vfio-pci.ids=10de:1d10"];
   # boot.extraModprobeConfig ="options i915.enable_gvt=1 i915.enable_guc=0 kvm_intel nested=1";
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "nvidia-uvm" "nvidia" "nvidia_modeset" "nvidia_drm" ];
   boot.kernelModules = [ "kvm-intel"  ];
   boot.kernelParams = [ ];
-  boot.extraModprobeConfig ="options ikvm_intel";
+  # boot.extraModprobeConfig ="options kvm_intel";
   #
   #   boot.postBootCommands = ''
   #   # Setup Looking Glass shared memory object
@@ -68,9 +68,11 @@
       prime = {
         nvidiaBusId = "PCI:1:0:0";
         intelBusId = "PCI:0:2:0";
+        sync.enable = false;
         offload.enable = true;
       };
       powerManagement.enable = true;
+      powerManagement.finegrained = true;
       nvidiaPersistenced = true;
       modesetting.enable = true;
     };
